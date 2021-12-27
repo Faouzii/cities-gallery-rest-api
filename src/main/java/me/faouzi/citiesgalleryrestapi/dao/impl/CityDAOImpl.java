@@ -27,17 +27,19 @@ public class CityDAOImpl implements CityDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<City> getByPagination(int pageNumber, int pageSize) throws Exception {
-		 Query query = entityManager.createQuery("From City");
-		  
-		    query.setFirstResult((pageNumber) * pageSize);
+		Query query = entityManager.createQuery("From City");
+		    query.setFirstResult((pageNumber - 1) * pageSize);
 		    query.setMaxResults(pageSize);
 		    List <City> cities = query.getResultList();
-
-//		    Query queryTotal = entityManager.createQuery ("Select count(c.id) From City c");
-//		    long countResult = (long)queryTotal.getSingleResult();
-//		    int i=(int)countResult;
-		   return cities;
-				
+		   return cities;		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public long countTotalCities() throws Exception {
+		Query queryTotal = entityManager.createQuery ("Select count(c.id) From City c");
+	    long countResult = (long)queryTotal.getSingleResult();
+	    return countResult;
 	}
 
 }

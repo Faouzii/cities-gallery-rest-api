@@ -2,10 +2,10 @@ package me.faouzi.citiesgalleryrestapi.service;
 
 import java.util.List;
 
-import me.faouzi.citiesgalleryrestapi.model.entity.City;
+import me.faouzi.citiesgalleryrestapi.model.dto.CityListResponseDto;
 
 public interface CityService {
 	
-	public List<City> getCities(int pageNumber, int pageSize) throws Exception;
+	public CityListResponseDto getCities(int pageNumber, int pageSize) throws Exception;
 	
 }
