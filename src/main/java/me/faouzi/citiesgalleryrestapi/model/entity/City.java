@@ -23,6 +23,12 @@ public class City {
 	private String imgUrl;
 	
 	
+	
+	public City() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public City(String label, String imgUrl) {
 		super();
 		//We generate the city unique ID 

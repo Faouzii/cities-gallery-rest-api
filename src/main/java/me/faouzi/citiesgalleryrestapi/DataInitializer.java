@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import me.faouzi.citiesgalleryrestapi.dao.CityDAO;
 import me.faouzi.citiesgalleryrestapi.model.entity.City;
 import me.faouzi.citiesgalleryrestapi.utils.Constants;
+
 
 @Component
 public class DataInitializer{
@@ -41,7 +43,7 @@ public class DataInitializer{
 	
 	
 	@PostConstruct
-	private void initializeData(){
+	private void initializeData() throws Exception{
 		
 		if (hibernateOperation.equals("create")) {
 			logger.info("Initializing application data tables on application startup..");
@@ -49,7 +51,8 @@ public class DataInitializer{
 		}		
 	}
 	
-	private void persisteCitiesFromCVS(){
+	
+	private void persisteCitiesFromCVS() throws Exception{
 		logger.info("Initializing cities tables..");
 		logger.info("Reading CVS file");
 		try (BufferedReader br = new BufferedReader(new FileReader(new ClassPathResource(citiesCsvFilename).getFile()))) {
