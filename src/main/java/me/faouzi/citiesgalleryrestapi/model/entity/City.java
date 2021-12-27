@@ -1,16 +1,16 @@
 package me.faouzi.citiesgalleryrestapi.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import me.faouzi.citiesgalleryrestapi.utils.StringsGenerators;
 
-@EntityScan
+@Entity
 @Table(name = "CITY")
 public class City {
 
@@ -19,13 +19,14 @@ public class City {
 	private Long id;
 	private String uid;
 	private String label;
+	@Column(length = 1200)
 	private String imgUrl;
 	
 	
 	public City(String label, String imgUrl) {
 		super();
 		//We generate the city unique ID 
-		this.imgUrl = StringsGenerators.generateUID();
+		this.uid = StringsGenerators.generateUID();
 		this.label = label;
 		this.imgUrl = imgUrl;
 	}
