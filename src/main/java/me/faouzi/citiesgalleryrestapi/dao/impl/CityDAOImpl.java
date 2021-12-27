@@ -42,4 +42,17 @@ public class CityDAOImpl implements CityDAO {
 	    return countResult;
 	}
 
+	@Override
+	public City getByUid(String uid) throws Exception {
+		Query query = entityManager.createQuery ("Select c From City c where c.uid = :uid ")
+		.setParameter("uid", uid);
+		City city = (City) query.getSingleResult();
+		return city;
+	}
+
+	@Override
+	public City update(City city) throws Exception {
+		return this.entityManager.merge(city);
+	}
+
 }

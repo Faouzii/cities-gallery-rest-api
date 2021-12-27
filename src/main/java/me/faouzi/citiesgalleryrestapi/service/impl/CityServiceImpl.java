@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import me.faouzi.citiesgalleryrestapi.dao.CityDAO;
+import me.faouzi.citiesgalleryrestapi.exception.CityNotFoundException;
 import me.faouzi.citiesgalleryrestapi.model.dto.CityDto;
 import me.faouzi.citiesgalleryrestapi.model.dto.CityListResponseDto;
 import me.faouzi.citiesgalleryrestapi.model.entity.City;
@@ -45,6 +46,18 @@ public class CityServiceImpl implements CityService{
 		}
 		CityListResponseDto citiesResponse = new CityListResponseDto(cityDtos, totalEntries);
 		return citiesResponse;
+	}
+
+	@Override
+	public CityDto updateCity(CityDto cityDto, String uid) throws Exception {
+		City city = cityDao.getByUid(uid);
+		if(city == null) {
+			throw new CityNotFoundException();
+		}
+		city.setImgUrl(cityDto.getImgUrl());
+		city.setLabel(cityDto.getLabel());
+		cityDao.update(city);
+		return null;
 	}
 
 
