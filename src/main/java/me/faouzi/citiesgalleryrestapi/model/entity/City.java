@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
+import me.faouzi.citiesgalleryrestapi.model.dto.CityDto;
 import me.faouzi.citiesgalleryrestapi.utils.StringsGenerators;
 
 @Entity
@@ -35,6 +35,11 @@ public class City {
 		this.uid = StringsGenerators.generateUID();
 		this.label = label;
 		this.imgUrl = imgUrl;
+	}
+	
+	public void updateFromDto(CityDto dto) {
+		this.label = dto.getLabel();
+		this.imgUrl = dto.getImgUrl();
 	}
 	
 	public Long getId() {

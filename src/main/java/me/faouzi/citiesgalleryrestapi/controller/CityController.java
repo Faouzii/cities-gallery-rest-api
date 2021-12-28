@@ -34,8 +34,8 @@ public class CityController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces("application/json")
 	public Response updateCity(CityDto city,@PathParam("uid") String uid) throws Exception{
-		cityService.updateCity(city, uid);
-		return Response.status(200).build();
+		CityDto dto = cityService.updateCity(city, uid);
+		return Response.status(200).entity(dto).build();
 	}
 
 }

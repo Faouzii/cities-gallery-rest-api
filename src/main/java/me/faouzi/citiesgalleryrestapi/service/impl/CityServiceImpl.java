@@ -44,8 +44,7 @@ public class CityServiceImpl implements CityService{
 		for(City city : cities) {
 			cityDtos.add(modelMapper.map(city, CityDto.class));
 		}
-		CityListResponseDto citiesResponse = new CityListResponseDto(cityDtos, totalEntries);
-		return citiesResponse;
+		return new CityListResponseDto(cityDtos, totalEntries);
 	}
 
 	@Override
@@ -54,10 +53,9 @@ public class CityServiceImpl implements CityService{
 		if(city == null) {
 			throw new CityNotFoundException();
 		}
-		city.setImgUrl(cityDto.getImgUrl());
-		city.setLabel(cityDto.getLabel());
-		cityDao.update(city);
-		return null;
+		city.updateFromDto(cityDto);
+		city =  cityDao.update(city);
+		return modelMapper.map(city, CityDto.class);
 	}
 
 

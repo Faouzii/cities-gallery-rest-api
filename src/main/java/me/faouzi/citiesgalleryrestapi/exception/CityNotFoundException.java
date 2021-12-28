@@ -19,7 +19,7 @@ public class CityNotFoundException  extends Exception implements ExceptionMapper
  
 	@Override
 	public Response toResponse(CityNotFoundException exception) {
-		return Response.status(401).entity(exception.getMessage())
+		return Response.status(404).entity(exception.getMessage())
                 .type("text/plain").build();
 	}
 
