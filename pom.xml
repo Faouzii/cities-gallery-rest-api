@@ -11,7 +11,7 @@
 	<groupId>me.faouzi</groupId>
 	<artifactId>cities-gallery-rest-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>cities-gallery-rest-api</name>
 	<description>Task application for the codest</description>
 	<properties>
