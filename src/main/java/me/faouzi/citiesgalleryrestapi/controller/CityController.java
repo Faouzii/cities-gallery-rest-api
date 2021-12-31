@@ -22,6 +22,8 @@ public class CityController {
 	@Autowired
 	private CityService cityService;
 	
+	
+	
 	@GET
 	@Produces("application/json")
 	public Response getCities(@QueryParam("page") int pageNumber, @QueryParam("size") int pageSize) throws Exception{
@@ -38,4 +40,20 @@ public class CityController {
 		return Response.status(200).entity(dto).build();
 	}
 
+	@GET
+	@Path("/status")
+	public String test() {
+		return "City Gallery Backend is up and running !";
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
