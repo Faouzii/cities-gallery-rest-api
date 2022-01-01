@@ -27,7 +27,7 @@ public class CityDAOImpl implements CityDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<City> getByPagination(int pageNumber, int pageSize) throws Exception {
-		Query query = entityManager.createQuery("From City");
+		Query query = entityManager.createQuery("FROM City");
 		    query.setFirstResult((pageNumber - 1) * pageSize);
 		    query.setMaxResults(pageSize);
 		    List <City> cities = query.getResultList();
@@ -37,14 +37,14 @@ public class CityDAOImpl implements CityDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public long countTotalCities() throws Exception {
-		Query queryTotal = entityManager.createQuery ("Select count(c.id) From City c");
+		Query queryTotal = entityManager.createQuery ("SELECT COUNT(c.id) FROM City c");
 	    long countResult = (long)queryTotal.getSingleResult();
 	    return countResult;
 	}
 
 	@Override
 	public City getByUid(String uid) throws Exception {
-		Query query = entityManager.createQuery ("Select c From City c where c.uid = :uid ")
+		Query query = entityManager.createQuery ("SELECT c FROM City c WHERE c.uid = :uid ")
 		.setParameter("uid", uid);
 		City city = (City) query.getSingleResult();
 		return city;
@@ -53,6 +53,25 @@ public class CityDAOImpl implements CityDAO {
 	@Override
 	public City update(City city) throws Exception {
 		return this.entityManager.merge(city);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<City> searchByNamePaginated(String keyword, int pageNumber, int pageSize) throws Exception {
+		Query query = entityManager.createQuery("SELECT c FROM City c WHERE lower(c.label) LIKE lower(:keyword)")
+		.setParameter("keyword", "%"+keyword+"%");
+	    query.setFirstResult((pageNumber - 1) * pageSize);
+	    query.setMaxResults(pageSize);
+		List <City> cities = query.getResultList();
+	   return cities;		
+	}
+
+	@Override
+	public long countCitiesByName(String keyword) throws Exception {
+		Query queryTotal = entityManager.createQuery ("SELECT COUNT(c.id) FROM City c WHERE LOWER(c.label) LIKE LOWER(:keyword)")
+		.setParameter("keyword", "%"+keyword+"%");
+	    long countResult = (long)queryTotal.getSingleResult();
+	    return countResult;
 	}
 
 }

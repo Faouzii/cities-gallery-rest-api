@@ -49,13 +49,31 @@ public class CityServiceImpl implements CityService{
 
 	@Override
 	public CityDto updateCity(CityDto cityDto, String uid) throws Exception {
+		logger.info("Trying to update city : " + cityDto.getLabel());
 		City city = cityDao.getByUid(uid);
 		if(city == null) {
+			logger.info("City Not Found !");
 			throw new CityNotFoundException();
 		}
 		city.updateFromDto(cityDto);
 		city =  cityDao.update(city);
+		logger.info("City updated successfully !");
 		return modelMapper.map(city, CityDto.class);
+	}
+
+
+	@Override
+	public CityListResponseDto getCitiesByName(String keyword, int pageNumber, int pageSize) throws Exception {
+		logger.info("Searching cities whose name contains " + keyword );
+		List<City> cities =  cityDao.searchByNamePaginated(keyword, pageNumber, pageSize);
+		long totalEntries = cityDao.countCitiesByName(keyword);
+		logger.info("Total cities contaning the keyword '" + keyword +"' are : "+ totalEntries);
+		//mapping persisting cities into DTOs in order to serve theme to the front end
+		List<CityDto> cityDtos = new ArrayList<CityDto>();
+		for(City city : cities) {
+			cityDtos.add(modelMapper.map(city, CityDto.class));
+		}
+		return new CityListResponseDto(cityDtos, totalEntries);
 	}
 
 

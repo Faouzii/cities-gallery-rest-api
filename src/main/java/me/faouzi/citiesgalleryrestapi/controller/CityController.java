@@ -30,6 +30,15 @@ public class CityController {
 		CityListResponseDto response =  cityService.getCities(pageNumber,pageSize);
 		return Response.status(200).entity(response).build();
 	}
+	
+	@GET
+	@Path("/filter")
+	@Produces("application/json")
+	public Response searchByName(@QueryParam("name") String keyword, @QueryParam("page") int pageNumber, @QueryParam("size") int pageSize) throws Exception{
+		CityListResponseDto response =  cityService.getCitiesByName(keyword,pageNumber,pageSize);
+		System.out.println(response.getCities().size());
+		return Response.status(200).entity(response).build();
+	}
 
 	@PUT
 	@Path("/{uid}")

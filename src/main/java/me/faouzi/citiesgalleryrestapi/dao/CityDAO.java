@@ -11,4 +11,6 @@ public interface CityDAO {
 	public long countTotalCities() throws Exception;
 	public City getByUid(String uid) throws Exception;
 	public City update(City city) throws Exception;
+	public List<City> searchByNamePaginated(String keyword,int pageNumber, int pageSize) throws Exception;
+	public long countCitiesByName(String keyword) throws Exception;
 }
