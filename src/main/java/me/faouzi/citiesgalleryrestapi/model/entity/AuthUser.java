@@ -23,21 +23,12 @@ public class AuthUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUser;
-	
+
 	@NotBlank
 	private String username;
-
-	@Size(max = 50)
-	@Email
-	private String email;
-
 	@NotBlank
 	@Size(max = 120)
 	private String password;
-
-	private String firstname;
-
-	private String lastname;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -48,17 +39,11 @@ public class AuthUser {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AuthUser(String username, String email, String password, String firstname, String lastname) {
+	public AuthUser(String username, String password) {
 		super();
-		if (username.isEmpty()) {
-			this.username = firstname + " " + lastname;
-		} else {
-			this.username = username;
-		}
-		this.email = email;
+
+		this.username = username;
 		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
 	}
 
 	public Long getIdUser() {
@@ -77,14 +62,6 @@ public class AuthUser {
 		this.username = username;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -99,22 +76,6 @@ public class AuthUser {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
 	}
 
 }

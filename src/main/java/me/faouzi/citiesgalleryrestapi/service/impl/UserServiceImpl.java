@@ -3,7 +3,6 @@ package me.faouzi.citiesgalleryrestapi.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,11 +13,9 @@ import me.faouzi.citiesgalleryrestapi.dao.UserDAO;
 import me.faouzi.citiesgalleryrestapi.model.dto.CustomUserDetails;
 import me.faouzi.citiesgalleryrestapi.model.dto.JwtResponse;
 import me.faouzi.citiesgalleryrestapi.model.entity.AuthUser;
-import me.faouzi.citiesgalleryrestapi.model.entity.Role;
 import me.faouzi.citiesgalleryrestapi.security.jwt.JwtUtils;
 import me.faouzi.citiesgalleryrestapi.service.UserService;
 import me.faouzi.citiesgalleryrestapi.utils.Constants;
-import me.faouzi.citiesgalleryrestapi.utils.ERole;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @Transactional
@@ -42,17 +38,13 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private HttpServletResponse httpServletResponse;
 	@Autowired
-	CustomUserDetailsService customUserDetailsService;
-	@Autowired
-	UserDAO userRepository;
-	@Autowired
-	PasswordEncoder encoder;
+	CustomUserDetailsService customUserDetailsService;;
 	@Autowired
 	JwtUtils jwtUtils;
 
-	public JwtResponse login(AuthUser requestUser) throws Exception{
-	 
-		logger.info("===== Loging user with Email: " + requestUser.getEmail());
+	public JwtResponse login(AuthUser requestUser) throws Exception {
+
+		logger.info("===== Loging user with username: " + requestUser.getUsername());
 		String username = requestUser.getUsername();
 		String password = requestUser.getPassword();
 
@@ -79,6 +71,14 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	
+	public ResponseEntity<?> logout() throws Exception {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			new SecurityContextLogoutHandler().logout(httpServletRequest, httpServletResponse, authentication);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
 
 }

@@ -6,5 +6,5 @@ public interface Constants {
 	
 	
 	// messages constants
-	public final static String SYS_USER_NOT_FOUND =" No user found with this email/password : ";
+	public final static String SYS_USER_NOT_FOUND =" No user found with this username/password : ";
 }
