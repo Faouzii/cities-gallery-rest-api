@@ -63,20 +63,20 @@ public class DataInitializer{
 			createadmin(new AuthUser("admin", "admin"));
 		}		
 	}
-	private void createadmin(AuthUser requestUser) {
+	private void createadmin(AuthUser requestUser) throws Exception {
 		 // Create admin
 		requestUser.setPassword(encoder.encode(requestUser.getPassword()));
 		Set<Role> roles_ = new HashSet<>();
 		Role defaultRole = new Role(ERole.ROLE_ALLOW_EDIT);
 		roles_.add(defaultRole);
 		requestUser.setRoles(roles_);
-		//requestUser = userRepository.save(requestUser);
+		 userRepository.persiste(requestUser);
 	}
 	
-	private void createUser(AuthUser requestUser) {
+	private void createUser(AuthUser requestUser) throws Exception {
 		 // Create new user
 		requestUser.setPassword(encoder.encode(requestUser.getPassword()));
-		//requestUser = userRepository.save(requestUser);
+		userRepository.persiste(requestUser);
 	}
 	
 	private void persisteCitiesFromCVS() throws Exception{

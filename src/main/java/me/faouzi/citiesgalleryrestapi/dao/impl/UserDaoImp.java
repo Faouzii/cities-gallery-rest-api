@@ -3,9 +3,12 @@ package me.faouzi.citiesgalleryrestapi.dao.impl;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 import me.faouzi.citiesgalleryrestapi.dao.UserDAO;
 import me.faouzi.citiesgalleryrestapi.model.entity.AuthUser;
+import me.faouzi.citiesgalleryrestapi.model.entity.City;
 
 @Repository
 public class UserDaoImp implements UserDAO {
@@ -19,6 +22,12 @@ public class UserDaoImp implements UserDAO {
 				.setParameter("username", username);
 		AuthUser user = (AuthUser) query.getSingleResult();
 		return user;
+	}
+	
+	@Transactional
+	@Override
+	public void persiste (AuthUser user) throws Exception {
+		 entityManager.persist(user);
 	}
 
 }
