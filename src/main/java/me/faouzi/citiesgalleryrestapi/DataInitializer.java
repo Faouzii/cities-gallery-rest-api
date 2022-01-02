@@ -59,8 +59,8 @@ public class DataInitializer{
 		if (hibernateOperation.equals("create")) {
 			logger.info("Initializing application data tables on application startup..");
 			persisteCitiesFromCVS();
-			createUser(new AuthUser("user", "user"));
-			createadmin(new AuthUser("admin", "admin"));
+			createUser(new AuthUser("user", "user01"));
+			createadmin(new AuthUser("admin", "admin01"));
 		}		
 	}
 	private void createadmin(AuthUser requestUser) throws Exception {

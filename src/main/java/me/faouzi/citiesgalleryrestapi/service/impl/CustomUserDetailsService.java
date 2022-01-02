@@ -16,13 +16,13 @@ import me.faouzi.citiesgalleryrestapi.utils.Constants;
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UserDAO userRepository;
+	private UserDAO userDao;
 
 	@Override
 	@Transactional
 	public CustomUserDetails loadUserByUsername(String username) throws BadCredentialsException {
 
-		AuthUser user = userRepository.findByUsername(username);
+		AuthUser user = userDao.findByUsername(username);
 		if (user == null) {
 
 			throw new BadCredentialsException(Constants.SYS_USER_NOT_FOUND + username);
