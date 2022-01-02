@@ -7,7 +7,6 @@ public class JwtResponse {
 	String token;
 	Long id;
 	String username;
-	String email;
 	List<String> roles;
 
 	public JwtResponse() {
@@ -20,7 +19,6 @@ public class JwtResponse {
 		this.token = token;
 		this.id = userDetails.getId();
 		this.username = userDetails.getUsername();
-		this.email = userDetails.getEmail();
 		this.roles = roles;
 	}
 
@@ -46,14 +44,6 @@ public class JwtResponse {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public List<String> getRoles() {
