@@ -45,7 +45,6 @@ public class JwtResponse {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 	public List<String> getRoles() {
 		return roles;
 	}
