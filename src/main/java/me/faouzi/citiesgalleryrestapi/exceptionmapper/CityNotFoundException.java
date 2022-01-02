@@ -1,4 +1,4 @@
-package me.faouzi.citiesgalleryrestapi.exception;
+package me.faouzi.citiesgalleryrestapi.exceptionmapper;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

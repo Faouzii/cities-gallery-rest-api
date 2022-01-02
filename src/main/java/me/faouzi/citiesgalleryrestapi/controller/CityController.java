@@ -1,5 +1,6 @@
 package me.faouzi.citiesgalleryrestapi.controller;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -11,11 +12,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Component;
 
 import me.faouzi.citiesgalleryrestapi.model.dto.CityDto;
 import me.faouzi.citiesgalleryrestapi.model.dto.CityListResponseDto;
 import me.faouzi.citiesgalleryrestapi.service.CityService;
 
+@Component
 @Path("/cities")
 public class CityController {
 	
@@ -43,6 +48,7 @@ public class CityController {
 	@PUT
 	@Path("/{uid}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@PreAuthorize("hasRole('ROLE_ALLOW_EDIT')")
 	@Produces("application/json")
 	public Response updateCity(CityDto city,@PathParam("uid") String uid) throws Exception{
 		CityDto dto = cityService.updateCity(city, uid);
