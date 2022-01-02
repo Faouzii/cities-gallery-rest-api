@@ -7,9 +7,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
-import me.faouzi.citiesgalleryrestapi.dao.UserDAO;
 import me.faouzi.citiesgalleryrestapi.model.dto.CustomUserDetails;
 import me.faouzi.citiesgalleryrestapi.model.dto.JwtResponse;
 import me.faouzi.citiesgalleryrestapi.model.entity.AuthUser;
@@ -41,6 +41,8 @@ public class UserServiceImpl implements UserService {
 	CustomUserDetailsService customUserDetailsService;;
 	@Autowired
 	JwtUtils jwtUtils;
+	@Autowired
+	PasswordEncoder encoder;
 
 	public JwtResponse login(AuthUser requestUser) throws Exception {
 
@@ -48,11 +50,10 @@ public class UserServiceImpl implements UserService {
 		String username = requestUser.getUsername();
 		String password = requestUser.getPassword();
 
-		logger.info("===== Serching by username : " + username);
+		logger.info("===== Searching by username : " + username);
 
 		CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-		if ((username.equals(userDetails.getUsername())) && (password.equals(userDetails.getPassword()))) {
-
+		if ((username.equals(userDetails.getUsername())) && (encoder.matches(password, userDetails.getPassword()))) {
 			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,
 					userDetails.getPassword(), userDetails.getAuthorities());
 

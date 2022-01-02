@@ -5,8 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import me.faouzi.citiesgalleryrestapi.model.entity.AuthUser;
 
-@Repository
-public interface UserDAO extends JpaRepository<AuthUser, Long> {
+
+public interface UserDAO  {
 
 	AuthUser findByUsername(String username);
 

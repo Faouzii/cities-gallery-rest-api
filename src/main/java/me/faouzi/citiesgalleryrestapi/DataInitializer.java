@@ -70,13 +70,13 @@ public class DataInitializer{
 		Role defaultRole = new Role(ERole.ROLE_ALLOW_EDIT);
 		roles_.add(defaultRole);
 		requestUser.setRoles(roles_);
-		requestUser = userRepository.save(requestUser);
+		//requestUser = userRepository.save(requestUser);
 	}
 	
 	private void createUser(AuthUser requestUser) {
 		 // Create new user
 		requestUser.setPassword(encoder.encode(requestUser.getPassword()));
-		requestUser = userRepository.save(requestUser);
+		//requestUser = userRepository.save(requestUser);
 	}
 	
 	private void persisteCitiesFromCVS() throws Exception{

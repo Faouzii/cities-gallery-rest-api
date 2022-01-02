@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		AuthUser user = userRepository.findByUsername(username);
 		if (user == null) {
-			System.out.println("user with email" + user + "   ****" + username);
+
 			throw new BadCredentialsException(Constants.SYS_USER_NOT_FOUND + username);
 		}
 		return CustomUserDetails.build(user);
