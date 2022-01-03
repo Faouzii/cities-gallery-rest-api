@@ -47,7 +47,7 @@ public class DataInitializer{
 	private CityDAO cityDao;
 	
 	@Autowired
-	UserDAO userRepository;
+	UserDAO userDao;
 	
 	@Autowired
 	PasswordEncoder encoder;
@@ -57,26 +57,29 @@ public class DataInitializer{
 	private void initializeData() throws Exception{
 		
 		if (hibernateOperation.equals("create")) {
-			logger.info("Initializing application data tables on application startup..");
-			persisteCitiesFromCVS();
 			createUser(new AuthUser("user", "user01"));
 			createadmin(new AuthUser("admin", "admin01"));
+			logger.info("Initializing application data tables on application startup..");
+			persisteCitiesFromCVS();
+			
 		}		
 	}
 	private void createadmin(AuthUser requestUser) throws Exception {
-		 // Create admin
+		 // Create user with role ALLOW_EDIT
+		logger.info("Creating new user with ROLE_ALLOW_EDIT..");
 		requestUser.setPassword(encoder.encode(requestUser.getPassword()));
 		Set<Role> roles_ = new HashSet<>();
 		Role defaultRole = new Role(ERole.ROLE_ALLOW_EDIT);
 		roles_.add(defaultRole);
 		requestUser.setRoles(roles_);
-		 userRepository.persiste(requestUser);
+		userDao.persiste(requestUser);
 	}
 	
 	private void createUser(AuthUser requestUser) throws Exception {
 		 // Create new user
+		logger.info("Creating new user WITHOUT ROLE_ALLOW_EDIT..");
 		requestUser.setPassword(encoder.encode(requestUser.getPassword()));
-		userRepository.persiste(requestUser);
+		userDao.persiste(requestUser);
 	}
 	
 	private void persisteCitiesFromCVS() throws Exception{

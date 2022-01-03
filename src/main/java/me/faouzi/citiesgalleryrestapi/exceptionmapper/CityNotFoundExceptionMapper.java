@@ -5,20 +5,20 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class CityNotFoundException  extends Exception implements ExceptionMapper<CityNotFoundException> {
+public class CityNotFoundExceptionMapper  extends Exception implements ExceptionMapper<CityNotFoundExceptionMapper> {
 	
 	private static final long serialVersionUID = 1L;
 	 
-    public CityNotFoundException() {
+    public CityNotFoundExceptionMapper() {
         super("City not found !");
     }
  
-    public CityNotFoundException(String string) {
+    public CityNotFoundExceptionMapper(String string) {
         super(string);
     }
  
 	@Override
-	public Response toResponse(CityNotFoundException exception) {
+	public Response toResponse(CityNotFoundExceptionMapper exception) {
 		return Response.status(404).entity(exception.getMessage())
                 .type("text/plain").build();
 	}

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import me.faouzi.citiesgalleryrestapi.dao.CityDAO;
-import me.faouzi.citiesgalleryrestapi.exceptionmapper.CityNotFoundException;
+import me.faouzi.citiesgalleryrestapi.exceptionmapper.CityNotFoundExceptionMapper;
 import me.faouzi.citiesgalleryrestapi.model.dto.CityDto;
 import me.faouzi.citiesgalleryrestapi.model.dto.CityListResponseDto;
 import me.faouzi.citiesgalleryrestapi.model.entity.City;
@@ -53,7 +53,7 @@ public class CityServiceImpl implements CityService {
 		City city = cityDao.getByUid(uid);
 		if (city == null) {
 			logger.info("City Not Found !");
-			throw new CityNotFoundException();
+			throw new CityNotFoundExceptionMapper();
 		}
 		city.updateFromDto(cityDto);
 		city = cityDao.update(city);
